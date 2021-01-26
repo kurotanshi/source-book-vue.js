@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello Vue</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <style>
+    #app{
+      margin: 1rem 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- vm1 -->
+  <div id="app"></div>
+
+  <script src="https://unpkg.com/vue@next"></script>
+
+  <script>
+    const vm = Vue.createApp({
+      template: `<div>{{ greeting }} 好棒棒!</div>`,
+      data() {
+        return {
+          greeting: 'Hello Vue.js!'
+        }
+      }
+    }).mount('#app');
+  </script>
+
+</body>
+
+</html>

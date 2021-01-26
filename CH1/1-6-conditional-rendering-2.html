@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello Vue</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <style>
+    #app {
+      display: block;
+      padding: 1rem;
+    }
+
+    h4 {
+      margin-bottom: 1rem;
+    }
+
+    button {
+      margin-right: 1em;
+    }
+
+    .wrap {
+      display: block;
+      overflow: hidden;
+      margin-top: 2rem;
+    }
+
+    .wrap div {
+      float: left;
+      margin-right: 2rem;
+      display: block;
+      width: 100px;
+      height: 100px;
+      line-height: 100px;
+      text-align: center;
+      color: #fff;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="app">
+    <h4>count: {{ count }}</h4>
+    <button @click="count++">Plus</button>
+    <button @click="count = 0">Reset</button>
+
+    <div class="wrap">
+      <div v-if="count === 0" style="background-color: #f00;">Block A</div>
+      <div v-else-if="count < 5" style="background-color: green">Block B</div>
+      <div v-else style="background-color: #00f;">Block C</div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/vue@next"></script>
+
+  <script>
+    const vm = Vue.createApp({
+      data: () => {
+        return {
+          count: 0
+        }
+      },
+    }).mount('#app');
+  </script>
+
+</body>
+
+</html>

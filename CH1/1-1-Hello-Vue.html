@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello Vue</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+</head>
+
+<body>
+
+  <div id="app">
+    {{ message }}
+  </div>
+
+
+  <script src="https://unpkg.com/vue@next"></script>
+  
+  <script>
+    // Vue 3.0 with options-base style
+    const vm = Vue.createApp({
+      data() {
+        return {
+          message: 'Hello Vue 3.0!'
+        }
+      }
+    });
+
+    // mount
+    vm.mount('#app');
+  </script>
+
+</body>
+
+</html>

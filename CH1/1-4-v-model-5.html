@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello Vue</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <style>
+    #app p {
+      margin: 1rem 0;
+    }
+
+    label {
+      margin-left: 0.5rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="app">
+    <input type="checkbox" id="checkbox" v-model="isChecked">
+    <label for="checkbox">Status: {{ isChecked }}</label>
+  </div>
+
+  <script src="https://unpkg.com/vue@next"></script>
+
+  <script>
+    // 因為是複選的關係，這裡的 checkedNames 是陣列
+    const vm = Vue.createApp({
+      data() {
+        return {
+          isChecked: false
+        }
+      }
+    }).mount('#app');
+  </script>
+
+</body>
+
+</html>

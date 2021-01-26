@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello Vue</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <style>
+    #app {
+      display: block;
+      padding: 1rem;
+    }
+
+    .wrap {
+      display: block;
+      overflow: hidden;
+      margin-top: 2rem;
+    }
+
+    .wrap div {
+      float: left;
+      margin-right: 2rem;
+      display: block;
+      width: 100px;
+      height: 100px;
+      line-height: 100px;
+      text-align: center;
+      background-color: #f00;
+      color: #fff;
+      font-size: 1rem;
+      border: 1px solid #000;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="app">
+    <label>
+      <input type="checkbox" v-model="isShow"> isShow: {{ isShow }}
+    </label>
+
+    <div class="wrap">
+      <div v-if="isShow"> V-if </div>
+      <div v-show="isShow"> V-show </div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/vue@next"></script>
+
+  <script>
+    const vm = Vue.createApp({
+      data: () => {
+        return {
+          isShow: true
+        }
+      },
+    }).mount('#app');
+  </script>
+
+</body>
+
+</html>

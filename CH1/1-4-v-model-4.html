@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello Vue</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <style>
+    #app p {
+      margin: 1rem 0;
+    }
+    label {
+      margin-left: 0.5rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="app">
+    <!-- 注意下面 input 對應的都是 v-model="checkedNames"  -->
+    <p>
+      <input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
+      <label for="jack">Jack</label>
+    </p>
+    <p>
+      <input type="checkbox" id="john" value="John" v-model="checkedNames">
+      <label for="john">John</label>
+    </p>
+    <p>
+      <input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+      <label for="mike">Mike</label>
+    </p>
+    <p>
+      <input type="checkbox" id="mary" value="Mary" v-model="checkedNames">
+      <label for="mary">Mary</label>
+    </p>
+    <br>
+    <p>Checked names: {{ checkedNames }}</p>
+  </div>
+
+  <script src="https://unpkg.com/vue@next"></script>
+
+  <script>
+    // 因為是複選的關係，這裡的 checkedNames 是陣列
+    const vm = Vue.createApp({
+      data() {
+        return {
+          checkedNames: []
+        }
+      }
+    }).mount('#app');
+  </script>
+
+</body>
+
+</html>

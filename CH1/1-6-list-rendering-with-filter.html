@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello Vue</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <style>
+    #app {
+      display: block;
+      padding: 1rem;
+    }
+
+    .block {
+      display: block;
+      float: left;
+      border: 1px solid #000;
+      width: 2rem;
+      height: 2rem;
+      text-align: center;
+      line-height: 2rem;
+      font-size: 1.25rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="app">
+    <div class="block" v-for="i in evenNumbers">{{ i }}</div>
+  </div>
+
+
+  <script src="https://unpkg.com/vue@next"></script>
+
+  <script>
+    const vm = Vue.createApp({
+      data() {
+        return {
+          numbers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        }
+      },
+      computed: {
+        // 只顯示偶數
+        evenNumbers() {
+          return this.numbers.filter(number => number % 2 === 0);
+        }
+      }
+    }).mount('#app');
+
+  </script>
+
+</body>
+
+</html>

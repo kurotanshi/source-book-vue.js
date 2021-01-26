@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello Vue</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <style>
+    #app {
+      display: block;
+      padding: 1rem;
+      font-size: 1rem;
+    }
+
+    p {
+      margin: 1rem 0;
+    }
+
+    .messages {
+      padding: 6px 10px;
+      width: 92%;
+      height: 4.5rem;
+      margin-bottom: 1rem;
+      overflow-y: scroll;
+      border: 1px solid #ccc;
+    }
+
+    input[type="text"] {
+      width: 93%;
+      height: 1.2rem;
+      padding: 3px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="app">
+    <p>
+      messages: {{ messages }}
+    </p>
+
+    <p>
+      scrollHeight: {{ scrollHeight }} <br>
+      DOM 實際的 scrollHeight: {{ realScrollHeight }}
+    </p>
+
+    <div class="messages">
+      <div v-for="m in messages">{{ m }}</div>
+    </div>
+
+    <input type="text" placeholder="輸入任意文字後按下 enter 鍵" v-model.trim="msg" @keydown.enter="addToMessages">
+  </div>
+
+
+  <script src="https://unpkg.com/vue@next"></script>
+
+  <script>
+    const vm = Vue.createApp({
+      data: () => {
+        return {
+          msg: '',
+          scrollHeight: 0,
+          realScrollHeight: 0,
+          messages: ['Hello', 'Vue.js', '好棒棒']
+        }
+      },
+      methods: {
+        addToMessages() {
+          this.messages.push(this.msg);
+          this.msg = '';
+
+          this.$nextTick(() => {
+            const el = document.querySelector('.messages');
+            el.scrollTop = el.scrollHeight;
+            this.realScrollHeight = el.scrollHeight;
+            this.scrollHeight = el.scrollHeight;
+          });
+        }
+      },
+      mounted() {
+        const el = document.querySelector('.messages');
+        this.realScrollHeight = el.scrollHeight;
+        this.scrollHeight = el.scrollHeight;
+      }
+    });
+
+
+    vm.mount('#app');
+  </script>
+
+</body>
+
+</html>

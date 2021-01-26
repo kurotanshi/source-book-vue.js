@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello Vue</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <style>
+    body {
+      padding: 1rem;
+    }
+
+    p {
+      margin: 1rem 0;
+    }
+
+    input {
+      width: 300px;
+      padding: 3px;
+    }
+
+    .error {
+      color: red;
+      border: solid 1px red;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="app">
+    <p>
+      <input type="text" placeholder="超過十個會變紅字" v-model.trim="message" v-bind:class="{ 'error': message.length > 10 }">
+    </p>
+
+    <p>
+      <input type="text" v-model.trim="message" placeholder="超過十個會變紅字" :style="msgStyle">
+    </p>
+
+  </div>
+
+  <script src="https://unpkg.com/vue@next"></script>
+
+  <script>
+    const vm = Vue.createApp({
+      data() {
+        return {
+          message: ''
+        }
+      },
+      computed: {
+        isVaild() {
+          return this.message.length <= 10;
+        },
+        msgStyle() {
+          return {
+            'border': this.isVaild ? '' : 'red solid 1px',
+            'color': this.isVaild ? '' : 'red'
+          };
+        }
+      }
+    }).mount('#app');
+  </script>
+
+</body>
+
+</html>

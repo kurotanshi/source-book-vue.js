@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello Vue</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <style>
+    #app {
+      display: block;
+      padding: 1rem;
+    }
+    li {
+      list-style-type: disc;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="app">
+    <ul>
+      <li v-for="item in arr">{{ item }}</li>
+    </ul>
+  </div>
+
+  <script src="https://unpkg.com/vue@next"></script>
+
+  <script>
+    const vm = Vue.createApp({
+      data() {
+        return {
+          arr: ['008', 'JS', 'is', 'awesome']
+        }
+      }
+    }).mount('#app');
+  </script>
+
+</body>
+
+</html>

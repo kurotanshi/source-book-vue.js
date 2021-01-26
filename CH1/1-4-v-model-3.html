@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello Vue</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <style>
+    #app p {
+      margin: 1rem 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="app">
+    <!-- 要注意下面兩組 input 對應的都是 v-model="picked"  -->
+    <p>
+      <input type="radio" id="one" value="1" v-model="picked">
+      <label for="one">One</label>
+    </p>
+    <p>
+      <input type="radio" id="two" value="2" v-model="picked">
+      <label for="two">Two</label>
+    </p>
+
+    <span>Picked: {{ picked }}</span>
+  </div>
+
+  <script src="https://unpkg.com/vue@next"></script>
+
+  <script>
+    const vm = Vue.createApp({
+      data() {
+        return {
+          picked: 1
+        }
+      }
+    }).mount('#app');
+  </script>
+
+</body>
+
+</html>

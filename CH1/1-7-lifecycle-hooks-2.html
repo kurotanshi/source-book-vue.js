@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello Vue</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <style>
+    #app {
+      display: block;
+      padding: 1rem;
+      font-size: 1.2rem;
+    }
+
+    .wrap {
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+
+    .wrap>div {
+      display: block;
+      float: left;
+      height: 10rem;
+    }
+
+    .demo {
+      width: 350px;
+    }
+
+    .inspector {
+      font-family: Consolas, Monaco, Andale Mono, Ubuntu Mono, monospace;
+      width: 90%;
+      max-width: 400px;
+      overflow-y: scroll;
+      border: 1px solid #ccc;
+    }
+
+    .inspector-msg {
+      padding-left: 1rem;
+      font-size: 1rem;
+      line-height: 2.5;
+      border-bottom: 1px solid #ececec;
+    }
+
+    .inspector-msg.highlight {
+      background-color: lightcyan;
+    }
+
+    button {
+      margin-right: 1rem;
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="app">
+
+    <h3>修改內容來觀察 Vue 實體的生命週期</h3>
+    <hr>
+
+    <div class="wrap">
+      <div class="demo">
+        <demo-app v-if="isActive" @update="pushMsg" />
+      </div>
+
+      <div class="inspector">
+        <div class="inspector-msg" v-for="(m, idx) in msg" :class="{ 'highlight' : m.isHighlight }" :key="m.msg + idx">
+          {{ m.msg }}</div>
+      </div>
+    </div>
+
+    <hr>
+    <button @click="toggle">{{ (!isActive) ? 'Active' : 'Destroy' }} the Vue instance</button>
+    <button @click="empty">Empty the inspector</button>
+
+  </div>
+
+
+  <script src="https://unpkg.com/vue@next"></script>
+
+  <script>
+    const vm = Vue.createApp({
+      data() {
+        return {
+          msg: [],
+          isActive: false
+        }
+      },
+      methods: {
+        toggle() {
+          if (!this.isActive) {
+            this.empty();
+          }
+          this.isActive = !this.isActive;
+        },
+        empty() {
+          this.msg = [];
+        },
+        pushMsg(msg) {
+          this.msg.push({
+            isHighlight: (msg.includes('===')),
+            msg: msg
+          });
+
+          this.$nextTick(() => {
+            const inspector = document.querySelector('.inspector');
+            inspector.scrollTop = inspector.scrollHeight;
+          });
+        },
+      }
+    });
+
+
+
+    vm.component('demo-app', {
+      template: `<div>
+        <h3>{{ msg }}</h3>
+        <input v-model="msg">
+      </div>`,
+      data() {
+        return {
+          msg: 'Hello Vue.js!'
+        }
+      },
+      beforeCreate() {
+        this.$emit('update', '=== beforeCreate! === ');
+        this.$emit('update', `this.msg: ${this.msg}`);
+        this.$emit('update', `this.$el: ${this.$el}`);
+      },
+      created() {
+        this.$emit('update', '=== created! === ');
+        this.$emit('update', `this.msg: ${this.msg}`);
+        this.$emit('update', `this.$el: ${this.$el}`);
+      },
+      beforeMount() {
+        this.$emit('update', '=== beforeMount! === ');
+        this.$emit('update', `this.msg: ${this.msg}`);
+        this.$emit('update', `this.$el: ${this.$el}`);
+      },
+      mounted() {
+        this.$emit('update', '=== mounted! === ');
+        this.$emit('update', `this.msg: ${this.msg}`);
+        this.$emit('update', `this.$el: ${this.$el}`);
+      },
+      beforeUpdate() {
+        this.$emit('update', '=== beforeUpdate! === ');
+        this.$emit('update', `msg in view: ${this.$el.querySelector('h3').innerText}`);
+        this.$emit('update', `this.msg: ${this.msg}`);
+      },
+      updated() {
+        this.$emit('update', '=== updated! === ');
+        this.$emit('update', `msg in view: ${this.$el.querySelector('h3').innerText}`);
+        this.$emit('update', `this.msg: ${this.msg}`);
+      },
+      beforeUnmount() {
+        this.$emit('update', `=== beforeUnmount! === `);
+      },
+      unmounted() {
+        this.$emit('update', `=== unmount! === `);
+      }
+    });
+
+    vm.mount('#app');
+
+  </script>
+
+</body>
+
+</html>

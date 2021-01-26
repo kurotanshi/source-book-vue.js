@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello Vue</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <style>
+    #app p {
+      margin: 1rem 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="app">
+    <!-- 模板裡無需加上 this -->
+    <p>Count: {{ count }}</p>
+    <button v-on:click="count++">Plus</button>
+  </div>
+
+  <script src="https://unpkg.com/vue@next"></script>
+
+  <script>
+    const vm = Vue.createApp({
+      data() {
+        return {
+          count: 0
+        }
+      },
+    }).mount('#app');
+  </script>
+
+</body>
+
+</html>

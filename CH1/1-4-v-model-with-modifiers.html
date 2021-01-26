@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello Vue</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <style>
+    #app p {
+      margin: 1rem 0;
+    }
+
+    label {
+      margin-left: 0.5rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="app">
+    <input v-model.lazy="message" placeholder="edit me">
+    <p>Message with ".lazy" : {{ message }}</p>
+
+    <hr>
+
+    <p>
+      V-model with .number:
+      <input v-model.number="num1"> + <input v-model.number="num2"> = {{ sum }}
+    </p>
+
+    <hr>
+
+    <input v-model.trim="message2" placeholder="edit me">
+    <p>Message with ".trim" is: {{ message }}</p>
+
+  </div>
+
+  <script src="https://unpkg.com/vue@next"></script>
+
+  <script>
+    const vm = Vue.createApp({
+      data() {
+        return {
+          message: 'Hello',
+          message2: '  Hello  ',
+          num1: 0,
+          num2: 0,
+        }
+      },
+      computed: {
+        sum() {
+          return this.num1 + this.num2;
+        }
+      }
+    }).mount('#app');
+  </script>
+
+</body>
+
+</html>

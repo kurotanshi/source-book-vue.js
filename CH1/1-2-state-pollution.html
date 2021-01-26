@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello Vue</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <style>
+    #app, #app2{
+      margin: 1rem 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- vm1 -->
+  <div id="app">
+    VM1: <input type="text" v-model="name">
+  </div>
+
+  <!-- vm2 -->
+  <div id="app2">
+    VM2: <input type="text" v-model="name">
+  </div>
+
+  <script src="https://unpkg.com/vue@next"></script>
+
+  <script>
+    const dataObj = {
+      name: '08JS'
+    };
+
+    const vm1 = Vue.createApp({
+      data() {
+        return dataObj
+      },
+    }).mount('#app');
+
+    const vm2 = Vue.createApp({
+      data() {
+        return dataObj
+      },
+    }).mount('#app2');
+  </script>
+
+</body>
+
+</html>

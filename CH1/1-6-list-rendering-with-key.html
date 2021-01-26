@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello Vue</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <style>
+    #app {
+      display: block;
+      padding: 1rem;
+      font-size: 1rem;
+    }
+
+    h3 {
+      margin-bottom: 1rem;
+    }
+
+    .wrap {
+      position: relative;
+      display: block;
+      overflow: hidden;
+    }
+
+    .todo-lists,
+    .done-lists {
+      display: block;
+      max-width: 150px;
+      width: 45%;
+      height: 120px;
+      margin-right: 4%;
+      float: left;
+      border: 1px solid #ccc;
+      padding: 1rem;
+    }
+
+    li {
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="app">
+    <div class="wrap">
+      <div class="todo-lists">
+        <h3>Todo List</h3>
+        <ul>
+          <li v-for="i in todoLists" :key="i.id">
+            <label><input v-model="i.isDone" type="checkbox"> {{ i.title }}</label>
+          </li>
+        </ul>
+      </div>
+
+      <div class="done-lists">
+        <h3>Done List</h3>
+        <ul>
+          <li v-for="i in doneLists" :key="i.id">
+            <label><input v-model="i.isDone" type="checkbox"> {{ i.title }}</label>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+  <script src="https://unpkg.com/vue@next"></script>
+
+  <script>
+    const vm = Vue.createApp({
+      data() {
+        return {
+          lists: [
+            {
+              id: 'task001',
+              title: '選項 1',
+              isDone: false
+            },
+            {
+              id: 'task002',
+              title: '選項 2',
+              isDone: false
+            },
+            {
+              id: 'task003',
+              title: '選項 3',
+              isDone: false
+            },
+          ]
+        }
+      },
+      computed: {
+        todoLists() {
+          return this.lists.filter(d => !d.isDone)
+        },
+        doneLists() {
+          return this.lists.filter(d => d.isDone)
+        },
+      }
+    }).mount('#app');
+
+  </script>
+
+</body>
+
+</html>

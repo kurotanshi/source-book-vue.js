@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello Vue</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <style>
+    body {
+      padding: 1rem;
+    }
+
+    .block {
+      overflow: hidden;
+      padding: 1rem;
+    }
+
+    .wrap {
+      float: left;
+      margin-right: 3rem;
+      margin-bottom: 2rem;
+    }
+
+    .outer {
+      cursor: pointer;
+      position: relative;
+      width: 150px;
+      height: 150px;
+      padding: 25px;
+      background-color: #ccc;
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    .outer:hover {
+      background-color: #b3b3b3;
+    }
+
+    .inner {
+      cursor: pointer;
+      position: relative;
+      top: 50%;
+      left: 50%;
+      margin-left: -45px;
+      margin-top: -55px;
+      width: 90px;
+      height: 90px;
+      text-align: center;
+      line-height: 70px;
+      background-color: #f00;
+      color: #fff;
+    }
+
+    .inner:hover {
+      background-color: #cc0000;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="app">
+
+    <div class="block">
+      <div class="wrap">
+        click without stopPropagation
+        <div class="outer" @click="alert('Outer')">
+          <span>Outer</span>
+          <div class="inner" @click="alert('Inner')">Inner</div>
+        </div>
+      </div>
+  
+      <div class="wrap">
+        click with stopPropagation
+        <div class="outer" @click="alert('Outer')">
+          <span>Outer</span>
+          <div class="inner" @click.stop="alert('Inner')">Inner</div>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="block">
+      <div class="wrap">
+        click without event capture
+        <div class="outer" @click="alert('Outer')">
+          <span>Outer</span>
+          <div class="inner" @click="alert('Inner')">Inner</div>
+        </div>
+      </div>
+    
+      <div class="wrap">
+        click with event capture
+        <div class="outer" @click.capture="alert('Outer')">
+          <span>Outer</span>
+          <div class="inner" @click="alert('Inner')">Inner</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="https://unpkg.com/vue@next"></script>
+
+  <script>
+    const vm = Vue.createApp({
+      methods: {
+        alert(val) {
+          alert(val);
+        }
+      }
+    }).mount('#app');
+  </script>
+
+</body>
+
+</html>

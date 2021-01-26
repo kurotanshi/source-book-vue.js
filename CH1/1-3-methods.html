@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello Vue</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <style>
+    #app p {
+      margin: 1rem 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="app">
+    <p> 總金額共 {{ subtotal() }} 元 </p>
+    <!-- ... 中間略 ... -->
+    <p> 總金額共 {{ subtotal() }} 元 </p>
+    <!-- ... 中間略 ... -->
+    <p> 總金額共 {{ subtotal() }} 元 </p>
+  </div>
+
+  <script src="https://unpkg.com/vue@next"></script>
+
+  <script>
+    const vm = Vue.createApp({
+      data() {
+        return {
+          price: 100,
+          quantity: 10
+        }
+      },
+      methods: {
+        subtotal: function () {
+          return this.price * this.quantity;
+        }
+      }
+    }).mount('#app');
+  </script>
+
+</body>
+
+</html>

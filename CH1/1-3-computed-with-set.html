@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello Vue</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <style>
+    #app p {
+      margin: 1rem 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="app">
+    <p>1 日幣 = 0.278 台幣</p>
+    <div>台幣 <input type="text" v-model="twd"></div>
+    <div>日幣 <input type="text" v-model="jpy"></div>
+  </div>
+
+  <script src="https://unpkg.com/vue@next"></script>
+
+  <script>
+    const vm = Vue.createApp({
+      data() {
+        return {
+          twd: 0.278
+        }
+      },
+      computed: {
+        jpy: {
+          get() {
+            return Number.parseFloat(Number(this.twd) / 0.278).toFixed(3);
+          },
+          set(val) {
+            this.twd = Number.parseFloat(Number(val) * 0.278).toFixed(3);
+          }
+        }
+      }
+    }).mount('#app');
+
+  </script>
+
+</body>
+
+</html>
