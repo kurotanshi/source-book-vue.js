@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello Vue</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+
+  <style>
+    #app {
+      display: block;
+      padding: 1rem;
+      padding-top: 2rem;
+      font-size: 1rem;
+    }
+
+    .book {
+      margin-bottom: 2rem;
+    }
+
+    .child-app {
+      padding: 1rem;
+      background-color: #ddd;
+      margin-top: 1rem;
+      line-height: 2;
+    }
+
+    li {
+      list-style-type: square;
+      list-style-position: inside;
+    }
+
+    input {
+      width: 65%;
+      line-height: 1.5;
+      font-size: 0.9rem;
+      padding: 2px 3px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="app">
+
+    <ul v-for="book in books" class="book">
+      <li>{{ book.name }}</li>
+      <li>{{ book.author }}</li>
+      <li>{{ book.publishedAt }}</li>
+    </ul>
+
+    <hr>
+
+    <my-component
+      v-for="book in books"
+      :name="book.name"
+      :author="book.author"
+      :published-at="book.publishedAt" />
+  </div>
+
+  <script src="https://unpkg.com/vue@next"></script>
+
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          books: [
+            {
+              name: '0 陷阱！0 誤解！8 天重新認識 JavaScript！',
+              author: 'Kuro Hsu',
+              publishedAt: '2019/09'
+            },
+            {
+              name: '重新認識 Vue.js',
+              author: 'Kuro Hsu',
+              publishedAt: '2021/02'
+            },
+          ]
+        }
+      }
+    });
+
+    app.component('my-component', {
+      template: `
+        <div class="child-app">
+          <div>書名: <input type="text" v-model="name"></div>
+          <div>作者: <input type="text" v-model="author"></div>
+          <div>出版日: <input type="text" v-model="publishedAt"></div>
+        </div>`,
+      props: ['name', 'author', 'published-at'],
+    });
+
+    app.mount('#app');
+  </script>
+
+</body>
+
+</html>

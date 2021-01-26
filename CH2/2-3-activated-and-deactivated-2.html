@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello Vue</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+
+  <style>
+    #app {
+      font-family: sans-serif;
+      border: 1px solid #eee;
+      border-radius: 2px;
+      padding: 20px 30px;
+      margin-top: 1em;
+      margin-bottom: 40px;
+      user-select: none;
+      overflow-x: auto;
+    }
+
+    .tab-button {
+      padding: 6px 10px;
+      border-top-left-radius: 3px;
+      border-top-right-radius: 3px;
+      border: 1px solid #ccc;
+      cursor: pointer;
+      background: #f0f0f0;
+      margin-bottom: -1px;
+      margin-right: -1px;
+    }
+
+    .tab-button:hover {
+      background: #e0e0e0;
+    }
+
+    .tab-button.active {
+      background: #e0e0e0;
+    }
+
+    .demo-tab {
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+
+    .dynamic-component-demo-posts-tab li {
+      margin-bottom: 1.5rem;
+    }
+
+    input {
+      min-width: 350px;
+      width: 90%;
+      padding: 3px 5px;
+      font-size: 1rem;
+    }
+
+    .inspector {
+      margin: 1.5rem 0;
+      display: block;
+      border: 1px solid #ccc;
+      background-color: #fff;
+      font-size: #333;
+      font-family: Consolas, Monaco, Andale Mono, Ubuntu Mono, monospace;
+      width: 94%;
+      height: 7rem;
+      overflow-y: scroll;
+      padding: 0 10px;
+    }
+
+    .inspector li {
+      font-size: 14px;
+      line-height: 1.33rem;
+      padding: 0;
+      list-style: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="app">
+    <button v-for="tab in tabs" :key="tab" :class="['tab-button', { active: currentTab === tab }]"
+      @click="currentTab = tab">
+      {{ tab }}
+    </button>
+
+    <keep-alive>
+      <component :is="currentTabComponent" @update="notify"></component>
+    </keep-alive>
+
+    <ul class="inspector">
+      <li v-for="m in msgs">{{ m }}</li>
+    </ul>
+
+  </div>
+
+
+
+  <script src="https://unpkg.com/vue@next"></script>
+
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          currentTab: 'Home',
+          tabs: ['Home', 'Posts', 'Archive'],
+          msgs: []
+        }
+      },
+      computed: {
+        currentTabComponent() {
+          return `tab-${this.currentTab.toLowerCase()}`;
+        }
+      },
+      methods: {
+        notify(val) {
+          this.msgs.push(val);
+        }
+      }
+    });
+
+    app.component('tab-home', {
+      name: 'tab-home',
+      template: `<div class="demo-tab"><input v-model="title"></div>`,
+      data: () => ({
+        title: 'Home component'
+      }),
+      created() {
+        this.$emit('update', `${this.$options.name} Created.`);
+      },
+      mounted() {
+        this.$emit('update', `${this.$options.name} Mounted.`);
+      },
+      unmounted() {
+        this.$emit('update', `${this.$options.name} Unmounted.`);
+      },
+      activated() {
+        this.$emit('update', `${this.$options.name} Activated.`);
+      },
+      deactivated() {
+        this.$emit('update', `${this.$options.name} Deactivated.`);
+      },
+    });
+
+    app.component('tab-posts', {
+      name: 'tab-posts',
+      template: `<div class="demo-tab"><input v-model="title"></div>`,
+      data: () => ({
+        title: 'Post component'
+      }),
+      created() {
+        this.$emit('update', `${this.$options.name} Created.`);
+      },
+      mounted() {
+        this.$emit('update', `${this.$options.name} Mounted.`);
+      },
+      unmounted() {
+        this.$emit('update', `${this.$options.name} Unmounted.`);
+      },
+      activated() {
+        this.$emit('update', `${this.$options.name} Activated.`);
+      },
+      deactivated() {
+        this.$emit('update', `${this.$options.name} Deactivated.`);
+      },
+
+    });
+
+    app.component('tab-archive', {
+      name: 'tab-archive',
+      template: `<div class="demo-tab"><input v-model="title"></div>`,
+      data: () => ({
+        title: 'Archive component'
+      }),
+      created() {
+        this.$emit('update', `${this.$options.name} Created.`);
+      },
+      mounted() {
+        this.$emit('update', `${this.$options.name} Mounted.`);
+      },
+      unmounted() {
+        this.$emit('update', `${this.$options.name} Unmounted.`);
+      },
+      activated() {
+        this.$emit('update', `${this.$options.name} Activated.`);
+      },
+      deactivated() {
+        this.$emit('update', `${this.$options.name} Deactivated.`);
+      },
+
+    });
+
+    app.mount('#app');
+  </script>
+
+</body>
+
+</html>

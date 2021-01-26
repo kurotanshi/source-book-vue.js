@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello Vue</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+
+  <style>
+    #app {
+      display: block;
+      padding: 1rem;
+      padding-top: 2rem;
+      font-size: 1rem;
+    }
+
+    input {
+      display: block;
+      font-size: 1rem;
+      padding: 5px;
+      margin-bottom: 1rem;
+      width: 350px;
+    }
+
+    li {
+      display: block;
+      width: 350px;
+      padding: 10px;
+      border: 1px solid #000;
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="app">
+    <input type="text" v-model="msg">
+
+    <list-component></list-component>
+  </div>
+
+
+
+  <script src="https://unpkg.com/mitt/dist/mitt.umd.js"></script>
+  <script src="https://unpkg.com/vue@next"></script>
+
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          msg: 'Hello App!'
+        }
+      },
+      provide() {
+        // 將 this.msg 透過 provide 傳遞出去
+        return {
+          provideMsg: this.msg,
+          provideMsg2: Vue.computed(() => this.msg)
+        };
+      }
+    });
+
+    app.component('list-component', {
+      template: `
+        <ul>
+          <li v-for="i in 3">
+            {{ i }}
+            <list-item />
+          </li>
+        </ul>`,
+      components: {
+        'list-item': {
+          // 在子、孫元件中，加上 inject 屬性即可取得 provideMsg
+          inject: ['provideMsg', 'provideMsg2'],
+          template: `
+            <div>provideMsg: {{ provideMsg }}!</div>
+            <div>provideMsg2: {{ provideMsg2.value }}!</div>`
+        }
+      }
+    });
+
+    app.mount('#app');
+
+  </script>
+
+</body>
+
+</html>

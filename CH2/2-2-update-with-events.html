@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello Vue</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+
+  <style>
+    #app {
+      display: block;
+      padding: 1rem;
+      padding-top: 2rem;
+      font-size: 1rem;
+    }
+
+    .book {
+      margin-bottom: 2rem;
+    }
+
+    .child-app {
+      padding: 1rem;
+      background-color: #ddd;
+      margin-top: 1rem;
+      line-height: 2;
+    }
+
+    li {
+      list-style-type: square;
+      list-style-position: inside;
+    }
+
+    input {
+      width: 65%;
+      font-size: 0.9rem;
+      padding: 2px 3px;
+      line-height: 2;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="app">
+
+    <ul v-for="(book, idx) in books" class="book" :key="book.id">
+      <li>{{ book.name }}</li>
+      <li>{{ book.author }}</li>
+      <li>{{ book.publishedAt }}</li>
+    </ul>
+
+    <hr>
+
+    <!-- 直接將 v-for 的 book 物件作為 props 傳遞 -->
+    <!-- 並監聽自訂的 update 事件 -->
+    <my-component v-for="(book, idx) in books" :key="idx" v-bind="book" @update="updateInfo"></my-component>
+
+  </div>
+
+
+
+  <script src="https://unpkg.com/vue@next"></script>
+
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          books: [{
+            id: '0001',
+            name: '0 陷阱！0 誤解！8 天重新認識 JavaScript！',
+            author: 'Kuro Hsu',
+            publishedAt: '2019/09'
+          },
+          {
+            id: '0002',
+            name: '重新認識 Vue.js',
+            author: 'Kuro Hsu',
+            publishedAt: '2021/02'
+          },
+          ]
+        }
+      },
+      methods: {
+        updateInfo(val) {
+          // 註：如果是 Vue 2.x 要透過 this.$set 來更新
+          // 如: this.$set(this.books, idx, val);
+
+          // Vue 3.x 則無此限制
+          const idx = this.books.findIndex(d => d.id === val.id);
+          this.books[idx] = val;
+        }
+      }
+    });
+
+    app.component('my-component', {
+      template: `
+    <div class="child-app">
+      <div>書名: <input type="text" v-model="bookInfo.name"></div>
+      <div>作者: <input type="text" v-model="bookInfo.author"></div>
+      <div>出版日: <input type="text" v-model="bookInfo.publishedAt"></div>
+    </div>`,
+      props: ['id', 'name', 'author', 'publishedAt'],
+      data() {
+        return {
+          bookInfo: {
+            id: this.id,
+            name: this.name,
+            author: this.author,
+            publishedAt: this.publishedAt
+          }
+        };
+      },
+      watch: {
+        bookInfo: {
+          // 注意！ 由於 bookInfo 物件必須加上 deep: true 
+          // 才能做物件的深層更新偵測 
+          deep: true,
+          handler(val) {
+            this.$emit('update', val);
+          },
+        },
+      }
+    });
+
+    app.mount('#app');
+
+  </script>
+
+</body>
+
+</html>

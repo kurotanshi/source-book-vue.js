@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello Vue</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+
+  <style>
+    #app {
+      position: relative;
+      display: block;
+      padding: 1rem;
+      font-size: 1rem;
+    }
+
+    button {
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .flexbox-wrapper {
+      position: relative;
+      overflow: hidden;
+      transition: height 1s;
+      min-height: 35px;
+      height: auto;
+      margin-bottom: 1rem;
+    }
+
+    .flexbox-body {
+      font-size: 1rem;
+      line-height: 1.75;
+    }
+
+    .user-block {
+      overflow: hidden;
+      background: #eee;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      width: 420px;
+    }
+
+    .user-block img {
+      width: 100px;
+      height: 100px;
+      float: left;
+      margin: 0 1rem 0 0;
+    }
+
+    .user-block .wraps {
+      float: left;
+      margin-top: 1rem;
+      margin-left: 0.7rem;
+      font-size: 0.9rem;
+    }
+
+    .user-block h2 {
+      font-weight: 500;
+      margin: 0 0 0.5rem 0;
+      font-size: 1rem;
+    }
+
+    .loading {
+      display: block;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .loading img {
+      border: none;
+    }
+
+    .v-enter-active,
+    .v-leave-active {
+      transition: opacity 1s;
+    }
+
+    .v-enter-from,
+    .v-leave-to {
+      opacity: 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="app">
+    <button @click="getUserInfo">取得隨機 User 資訊</button>
+
+    <div class="flexbox-wrapper" :style="{height: height+'px'}">
+      <div class="flexbox-body" ref="content">
+        <div class="user-block" v-if="userInfo.name">
+          <h2>{{ userInfo.name }} / @{{ userInfo.username }}</h2>
+
+          <img src="https://dummyimage.com/200x200/666/fff" alt="dummyimage">
+          <div class="wraps">
+            <p>{{ userInfo.company.name }}</p>
+            <p>{{ userInfo.phone }}</p>
+            <p>{{ userInfo.email }}</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+    <transition @before-enter="beforeEnter" @before-leave="beforeLeave">
+      <div v-if="isLoading" class="loading">
+        <img src="https://raw.githubusercontent.com/kurotanshi/vue-functional-demo/master/loading.gif" alt="loading">
+      </div>
+    </transition>
+  </div>
+
+  <script src="https://unpkg.com/vue@next"></script>
+
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          height: 0,
+          userInfo: {},
+          isLoading: false
+        }
+      },
+      methods: {
+        getRandomUserId() {
+          // 1 ~ 10
+          return Math.floor(Math.random() * 10) + 1;
+        },
+        async getUserInfo() {
+          this.isLoading = true;
+          this.userInfo = {};
+          const userId = this.getRandomUserId();
+
+          const res = await fetch('https://jsonplaceholder.typicode.com/users/' + userId)
+            .then((response) => response.json())
+            .then((json) => json);
+
+          // 加上延遲，避免太快看不到 loading
+          window.setTimeout(() => {
+            this.isLoading = false;
+            this.userInfo = res;
+          }, 3000);
+
+        },
+        beforeEnter() {
+          this.height = 0;
+        },
+        beforeLeave() {
+          // nextTick
+          this.$nextTick(() => {
+            // $refs
+            this.height = this.$refs.content.getBoundingClientRect().height;
+          })
+        },
+      },
+    });
+
+    app.mount('#app');
+  </script>
+
+</body>
+
+</html>

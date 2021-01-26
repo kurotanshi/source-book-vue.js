@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello Vue</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+
+  <style>
+    #app {
+      position: relative;
+      display: block;
+      padding: 1rem;
+      font-size: 1rem;
+    }
+
+    button {
+      font-size: 1rem;
+    }
+
+    .block {
+      display: block;
+      width: 120px;
+      height: 80px;
+      line-height: 80px;
+      text-align: center;
+      font-size: 1.2rem;
+      margin-top: 1rem;
+      background-color: #3eaf7c;
+      color: #fff;
+    }
+
+    .shake {
+      animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+      transform: translate3d(0, 0, 0);
+      backface-visibility: hidden;
+      perspective: 1000px;
+    }
+
+    @keyframes shake {
+
+      10%,
+      90% {
+        transform: translate3d(-1px, 0, 0);
+      }
+
+      20%,
+      80% {
+        transform: translate3d(2px, 0, 0);
+      }
+
+      30%,
+      50%,
+      70% {
+        transform: translate3d(-4px, 0, 0);
+      }
+
+      40%,
+      60% {
+        transform: translate3d(4px, 0, 0);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="app">
+
+    <button @click="noActivated = true">Shack It!</button>
+
+    <div class="block" :class="{ shake: noActivated }">Block</div>
+  </div>
+
+
+
+  <script src="https://unpkg.com/vue@next"></script>
+
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          noActivated: false
+        }
+      }
+    });
+
+    app.mount('#app');
+  </script>
+
+</body>
+
+</html>

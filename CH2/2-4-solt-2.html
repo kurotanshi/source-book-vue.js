@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello Vue</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+
+  <style>
+    #app {
+      display: block;
+      padding: 1rem;
+      padding-top: 2rem;
+      font-size: 1rem;
+    }
+
+    #app h1,
+    #app div {
+      border: 1px solid #000;
+    }
+
+    #app h1 {
+      background-color: #eee;
+      font-size: 1.5rem;
+      padding: 10px;
+      margin-bottom: 1rem;
+    }
+
+    #app div {
+      background-color: #ccc;
+      font-size: 1rem;
+      padding: 5px;
+      margin: 5px 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="app">
+    <h1>{{ msg }}</h1>
+  
+    <!-- 元件內不插入任何內容 -->
+    <custom-component></custom-component>
+  </div>
+
+
+  <script src="https://unpkg.com/vue@next"></script>
+
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          msg: 'Parent!'
+        }
+      }
+    });
+
+    app.component('custom-component', {
+      template: `<div> 
+        Hello!
+        <div>
+          <slot>這是預設內容</slot>
+        </div>
+      </div>`,
+      data() {
+        return {
+          msg: 'Child !'
+        }
+      }
+    });
+
+    app.mount('#app');
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello Vue</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+
+  <style>
+    #app {
+      position: relative;
+      display: block;
+      padding: 1rem;
+      font-size: 1rem;
+    }
+
+    button {
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .block {
+      display: block;
+      width: 150px;
+      height: 100px;
+      text-align: center;
+      line-height: 100px;
+      background-color: #0f0;
+    }
+
+    .mode {
+      margin-bottom: 1rem;
+    }
+
+    .mode label {
+      margin-right: 1rem;
+    }
+
+    .fade-enter-active,
+    .fade-leave-active {
+      transition: opacity 1s;
+    }
+
+    .fade-enter-from,
+    .fade-leave-to {
+      opacity: 0;
+    }
+
+    .fade-enter-to,
+    .fade-leave-from {
+      opacity: 1;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="app">
+
+    <div class="mode">
+      <label>
+        <input v-model="demo" type="radio" value="A"> Block A
+      </label>
+      <label>
+        <input v-model="demo" type="radio" value="B"> Block B
+      </label>
+      <label>
+        <input v-model="demo" type="radio" value="C"> Block C
+      </label>
+    </div>
+
+    <transition-group name="fade">
+      <div v-if="demo === 'A'" key="block-a" class="block">A Block</div>
+      <div v-if="demo === 'B'" key="block-b" class="block">B Block</div>
+      <div v-if="demo === 'C'" key="block-c" class="block">C Block</div>
+    </transition-group>
+  </div>
+
+
+
+  <script src="https://unpkg.com/vue@next"></script>
+
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          demo: 'A',
+          isShow: true
+        }
+      }
+    });
+
+    app.mount('#app');
+
+  </script>
+
+</body>
+
+</html>

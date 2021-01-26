@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello Vue</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+
+  <style>
+    #app {
+      display: block;
+      padding: 1rem;
+      font-size: 1rem;
+    }
+
+    .component {
+      padding: 1rem;
+      margin-top: 1rem;
+      background-color: #ccc;
+      margin-bottom: 1rem;
+      line-height: 2;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="app">
+    <!-- 這是外層元件的 msg -->
+    <h3>{{ msg }}</h3>
+
+    <!-- 這裡的 v-bind:parent-msg 可以簡寫為 :parent-msg -->
+    <my-component v-bind:parent-msg="msg"></my-component>
+  </div>
+
+
+  <script src="https://unpkg.com/vue@next"></script>
+
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          msg: '這是外層元件的 msg'
+        }
+      }
+    });
+
+    app.component('my-component', {
+      template: `
+        <div class="component">
+          <div> 從 props 來的 parentMsg ==> {{ parentMsg }} </div>
+          <div> 自己的 msg ==> {{ msg }} </div>
+        </div>`,
+      props: ["parentMsg"],
+      data: () => {
+        return {
+          msg: '這是子元件的 msg'
+        }
+      }
+    });
+
+    app.mount('#app');
+  </script>
+
+</body>
+
+</html>

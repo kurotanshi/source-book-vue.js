@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello Vue</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+
+  <style>
+    #app {
+      display: block;
+      padding: 1rem;
+      padding-top: 2rem;
+      font-size: 1rem;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+
+    input {
+      font-size: 1.25rem;
+      padding: 5px;
+    }
+
+    button {
+      margin-right: 1rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="app">
+    <h1>Total: {{ sum }}</h1>
+
+    <button-counter @add-sum="plus"></button-counter>
+    <button-counter @add-sum="plus"></button-counter>
+    <button-reset></button-reset>
+  </div>
+
+
+
+  <script src="https://unpkg.com/vue@next"></script>
+
+  <script>
+    const {
+      ref,
+      watch,
+      createApp
+    } = Vue;
+
+    const sum = ref(0);
+    const plus = () => sum.value++;
+    const reset = () => sum.value = 0;
+
+    const app = createApp({
+      setup() {
+
+        return {
+          sum,
+          plus
+        };
+      }
+    });
+
+    app.component('button-counter', {
+      template: `<button @click="plus">You clicked me {{ count }} times.</button>`,
+      setup(props, {
+        emit
+      }) {
+        const count = ref(0);
+        const plus = () => {
+          count.value++
+          emit('add-sum');
+        };
+
+        watch(sum, v => count.value = v === 0 ? 0 : count.value);
+
+        return {
+          count,
+          plus
+        }
+      }
+    });
+
+
+    app.component('button-reset', {
+      template: `<button @click="reset">reset</button>`,
+      setup() {
+        return {
+          reset
+        }
+      }
+    });
+
+    app.mount('#app');
+  </script>
+
+</body>
+
+</html>

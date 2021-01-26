@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello Vue</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+
+  <style>
+    #app {
+      font-family: sans-serif;
+      border: 1px solid #eee;
+      border-radius: 2px;
+      padding: 20px 30px;
+      margin-top: 1em;
+      margin-bottom: 40px;
+      user-select: none;
+      overflow-x: auto;
+    }
+
+    .tab-button {
+      padding: 6px 10px;
+      border-top-left-radius: 3px;
+      border-top-right-radius: 3px;
+      border: 1px solid #ccc;
+      cursor: pointer;
+      background: #f0f0f0;
+      margin-bottom: -1px;
+      margin-right: -1px;
+    }
+
+    .tab-button:hover {
+      background: #e0e0e0;
+    }
+
+    .tab-button.active {
+      background: #e0e0e0;
+    }
+
+    .demo-tab {
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+
+    .dynamic-component-demo-posts-tab li {
+      margin-bottom: 1.5rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="app">
+    <button v-for="tab in tabs" :key="tab" :class="['tab-button', { active: currentTab === tab }]"
+      @click="currentTab = tab">
+      {{ tab }}
+    </button>
+
+    <component :is="currentTabComponent"></component>
+  </div>
+
+
+  <script src="https://unpkg.com/vue@next"></script>
+
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          currentTab: 'Home',
+          tabs: ['Home', 'Posts', 'Archive']
+        }
+      },
+      computed: {
+        currentTabComponent() {
+          return `tab-${this.currentTab.toLowerCase()}`;
+        }
+      }
+    });
+
+    app.component('tab-home', {
+      template: `<div class="demo-tab">Home component</div>`
+    });
+
+    app.component('tab-posts', {
+      template: `<div class="demo-tab">Post component</div>`
+    });
+
+    app.component('tab-archive', {
+      template: `<div class="demo-tab">Archive component</div>`
+    });
+
+    app.mount('#app');
+  </script>
+
+</body>
+
+</html>

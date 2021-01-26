@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello Vue</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+
+  <style>
+    #app {
+      display: block;
+      padding: 1rem;
+      padding-top: 2rem;
+      font-size: 1rem;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+
+    input {
+      font-size: 1.25rem;
+      padding: 5px;
+    }
+    
+    button {
+      margin-right: 1rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="app">
+    <h1>Total: {{ sum }}</h1>
+
+    <button-counter @add-sum="plus"></button-counter>
+    <button-counter @add-sum="plus"></button-counter>
+    <button-reset></button-reset>
+  </div>
+
+
+  <script src="https://unpkg.com/mitt/dist/mitt.umd.js"></script>
+  <script src="https://unpkg.com/vue@next"></script>
+
+  <script>
+    const bus = mitt();
+
+    const app = Vue.createApp({
+      data() {
+        return {
+          sum: 0
+        }
+      },
+      methods: {
+        plus() {
+          this.sum++;
+        },
+        reset() {
+          this.sum = 0;
+        }
+      },
+      created() {
+        // 實體建立時，在 bus 身上註冊 reset 事件
+        // 觸發事件時呼叫 reset 方法
+        bus.on('reset', this.reset);
+      }
+    });
+
+    app.component('button-counter', {
+      template: `<button @click="plus">You clicked me {{ count }} times.</button>`,
+      data() {
+        return {
+          count: 0
+        };
+      },
+      methods: {
+        plus() {
+          this.count++;
+          this.$emit('add-sum');
+        },
+        reset() {
+          this.count = 0;
+        },
+      },
+      created() {
+        bus.on('reset', this.reset);
+      }
+    });
+
+    app.component('button-reset', {
+      template: `<button @click="reset">reset</button>`,
+      methods: {
+        reset() {
+          bus.emit('reset');
+        },
+      },
+    });
+
+    app.mount('#app');
+
+  </script>
+
+</body>
+
+</html>

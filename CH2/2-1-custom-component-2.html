@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello Vue</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+
+  <style>
+    #app {
+      display: block;
+      padding: 1rem;
+      font-size: 1rem;
+      background-color: #eee;
+    }
+
+    .app-child {
+      padding: 10px;
+      background-color: #ccc;
+      margin: 1rem 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="app">
+    <h3>Root Instance</h3>
+
+    <!-- 在根實體使用自訂元件 -->
+    <child-comp></child-comp>
+    <child-comp></child-comp>
+  </div>
+
+
+  <script src="https://unpkg.com/vue@next"></script>
+
+  <script type="text/x-template" id="app-child">
+    <div class="app-child">
+      <div>Hello Vue!</div>
+    </div>
+  </script>
+
+  <script>
+    const vm = Vue.createApp({});
+
+    // 子元件
+    vm.component('child-comp', {
+      template: `#app-child`
+    });
+
+    vm.mount('#app');
+
+  </script>
+
+</body>
+
+</html>
